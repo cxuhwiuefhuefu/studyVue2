@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <style>
+        
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #app{
+            display: inline-block;
+            margin: 20px;
+            border: 1px solid #000;
+            padding: 20px;
+            padding-bottom: 0;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .course{
+            display: flex;
+            margin-bottom: 15px;
+          
+        }
+
+        .img-box{
+            position: relative;
+        }
+
+        .course-img{
+            width: 140px;
+            height: 80px;
+            vertical-align: bottom;   
+        }
+
+        .course span{
+            box-sizing: border-box;
+            position: absolute;
+            bottom: 0;
+            display: block;
+            width: 100%;
+            line-height: 20px;
+            padding-left: 10px;
+            color: #fff;
+            font-size: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .title{
+            width: 250px;
+            box-sizing: border-box;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .free{
+            color: #5fb41b;
+        }
+
+        .play-back{
+            display: inline-block;
+            padding: 0 3px;
+            font-size: 12px;
+            border: 1px solid #73b3e7;
+            color: #73b3e7;
+        }
+
+        .price{
+            color: #e85308;
+        }
+
+        .choose{
+            opacity: .3;
+        }
+    
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <course-list :list="courseList" @price="getPrice"></course-list>
+        合计: {{price}}
+    </div>
+
+    <script>
+        // 父子组件传值
+        
+
+        // 局部组件
+        const courseList = {
+            // props: ['list'],
+            // props: { // 对它进行约束
+            //     // list: String
+            //     list: [String, Array]
+            // },
+            props: {
+                list: {
+                    type: Array,
+                    default: [], // 如果父组件不给我传值我用我自己的  
+                    require: true, // 规定父组件是不是一定要把值传过来    true规定一定要把值传过来
+                    // validator(value) { // 要对传来的值进行一个校验
+                    //     console.log(value);
+                    //     // return true;
+                    //     // return value.length < 5;
+                    // }
+                }
+            },
+
+            data() {
+                return {
+                    totalPriceArr: [],
+                    alreadyHasArr: [],
+                    totalPrice: 0
+                }
+            },
+
+            template: `<ul>
+                         <li v-for="(item, index) in list"
+                             :key="item.name"
+                             @click="addToBuy(index, item.price)"
+                             @contextmenu.prevent="removeFromBuy(index, item.price)"
+                             :class="{course: true, choose: alreadyHasArr[index]}">
+                            <div class="img-box">
+                                <img class="course-img" :src="item.poster" alt="">
+                                <span v-if="item.enrollment">{{item.enrollment}}人报名</span>
+                                <span v-if="item.buyNumber">{{item.buyNumber}}人购买</span>
+                            </div>
+                            
+                            <div class="content-box">
+                                <div class="title">{{item.name}}</div>
+                                <div class="free" v-if="item.free">免费</div>
+                                <div class="play-back" v-if="item.playBack">回放</div>
+                                <div class="price" v-if="item.price">￥{{item.price}}</div>
+                            </div>
+                        </li>
+                    </ul>`,
+                methods: { // 在组件内写函数要放在method里面
+                    addToBuy(index, price) {
+                        if(this.alreadyHasArr[index]) {
+                            return;
+                        }
+                        this.totalPriceArr.push(price);
+
+                        // this.alreadyHasArr[index] = true;
+                        // this.alreadyHasArr.splice(index, 1, true);  // 如果找不到那个索引只能往最后一个插入值了 所以不能使用这个方法
+                        this.$set(this.alreadyHasArr, index, true); // $set？？？？
+                        console.log(this.alreadyHasArr);
+
+                        // this.totalPrice = this.totalPriceArr.reduce((prev, cur) => {
+                        //     return prev + cur;
+                        // })
+                        this.getTotalPrice();
+                        console.log(this.totalPrice);
+
+                        // console.log(index, this.totalPriceArr);
+                        // [] -> price  totalPrice
+                        // [] -> 存储 在购物车里 [true, false, true]
+                    },
+                    removeFromBuy(index, price) {
+                        if(!this.alreadyHasArr[index]) {
+                            return;
+                        }
+
+                        const totalPriceIndex = this.totalPriceArr.findIndex( item => {
+                            return item == price;
+                        })
+                        this.alreadyHasArr.splice(index, 1, false);
+                        this.totalPriceArr.splice(totalPriceIndex, 1);
+                        console.log(this.alreadyHasArr);
+
+                        this.getTotalPrice();
+                    },
+                    getTotalPrice() {
+                        // 空数组调用reduce会出现错误
+                        if(this.totalPriceArr.length === 0) {
+                            this.totalPrice = 0;
+                        }else {
+                            this.totalPrice = this.totalPriceArr.reduce( (prev, cur) => {
+                                return prev + cur;
+                            })
+                        }
+                        console.log(this.totalPrice);
+
+                        this.$emit('price', this.totalPrice); // 自定义事件的名字叫price, 要传递的值 
+                    }
+                }
+        }
+
+        const vm = new Vue({
+            el:  '#app',
+            components: {
+                courseList
+            },
+            data: {
+                price: 0,
+                courseList:[
+                                {
+                                    name: 'Web前端开发之JavaScript(Js)精英课堂【渡一教育】',
+                                    free: true,
+                                    playback: false,
+                                    price: 0,
+                                    buyNumber: 0,
+                                    enrollment: 4942,
+                                    poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBsSud06XlZnJACsTWd7OSA5phIFPRTNibFBeuT8jRjy00Jb5ticSEKYUnpUYdBCicH2U/356'
+                                },
+                                {
+                                    name: 'Web前端开发之HTML+CSS精英课堂【渡一教育】',
+                                    free: true,
+                                    playback: false,
+                                    price: 0,
+                                    buyNumber: 0,
+                                    enrollment: 2982,
+                                    poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBDFLdArBwf70PjMrL6bq0OI9LesEsskk1iamJKibriaic0QkBZhINoDuN0DicaojkqyQjk/356'
+                                },
+                                {
+                                    name: '淘宝商城项目实战开发【渡一教育】',
+                                    free: true,
+                                    playback: false,
+                                    price: 0,
+                                    buyNumber: 0,
+                                    enrollment: 1742,
+                                    poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLDBpXKL1sgAOKcbSz0Od2abiaqdJibiaDDQWfmrVNBCFrIpbTQKlNyWbPg5Uo1dnT7Znk/356'
+                                },
+                                {
+                                    name: '零基础WEB前端入门',
+                                    free: false,
+                                    playback: true,
+                                    price: 9.9,
+                                    buyNumber: 2514,
+                                    enrollment: 0,
+                                    poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLCRlDgtxVbmyclxP9fDUYmnuqAFbN5mYsncrPrVyQbtA3fNfuZ3qicSe1r7Ppt7tICs/356'
+                                },
+                                {
+                                    name: 'React顶级企业实战，全流程制作淘票票WebApp【渡一教育】',
+                                    free: false,
+                                    playback: true,
+                                    price: 399,
+                                    buyNumber: 670,
+                                    enrollment: 0,
+                                    poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLB2CyXIxsb8iaAUibBB9mzlkSgKNU7GiciaYxG1SicoLjkiahZ3ia54eZWbtCGDkFyvMo0uKk/356'
+                                },
+                                {
+                                    name: '原生JS贪吃蛇游戏实战开发【渡一教育】',
+                                    free: true,
+                                    playback: false,
+                                    price: 0,
+                                    buyNumber: 0,
+                                    enrollment: 1123,
+                                    poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLCfsOGnxjhUXFA6SHMOu0fMUicuucRlIVNo9zBnnLiacovMnePD6586QlRj2qvwudbn8/356'
+                                },
+                                {
+                                    name: '原生JS扫雷游戏实战开发【渡一教育】',
+                                    free: true,
+                                    playback: false,
+                                    price: 0,
+                                    buyNumber: 0,
+                                    enrollment: 631,
+                                    poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLDaTljUSVGk2eqS1MCT3DwDqxgs7KhfMf3411SXQkRvmiaicIuz47ydO27zGPWK97wicw/356'
+                                },
+                                {
+                                    name: '你不知道的Javascript【渡一教育】',
+                                    free: true,
+                                    playback: false,
+                                    price: 0,
+                                    buyNumber: 0,
+                                    enrollment: 1696,
+                                    poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLCelo2lyibtrxDia7aq7tC0LE1Lcz2LVoDqhQy5tnOHicTzWhLuvPekL35rEmwTdgNuwI/356'
+                                }
+                            ]
+            },
+            methods: {
+                getPrice(price) {
+                    this.price = price;
+                }
+            }
+        })
+
+        // 2. 正常情况下我们会进行一次网络请求 网络请求最好在副页面里面请求 因为我们副页面会有很多个组件 
+        //        我们一次请求就可以拿回来很多个组件的东西 这样更方便 如果说在组件内部进行请求 这个很麻烦 你要进行很多次请求
+        //        你有多少个组件就要进行多少个请求 现在要在副页面传值给我们的组件
+
+        // 在小程序中需要写个propties的 在vue我们有权力子组件对父组件传递数据做一个约束的 可以做一个校验 props是一个要接受的数据
+
+        // props特性 传值接受 接受不显示在行间
+        // 非props特性 传值没接受 不接受显示在行间
+
+
+        // 组件使用数据和在实例间使用数据是不一样的 在这个里面它是一个对象 在组件中它是一个函数 并且这个函数需要return回一个对象 
+        //     这个对象里面放的是我们组件能够使用到的数据 为什么这么设计 是因为我们vue这个根组件里面只用一次 只能出现一次 
+        //     那在子组件这个data可能会被使用很多次 比如一个页面出现多次同一个组件 写成对象的形式会造成页面的冲突 我们要让这个数据有相互独立的存储 
+        //     那我要使用函数的形式 要把它放在函数里面 并且返回函数的对象 这个对象存放的是我们数组要使用的对象的数据
+        
+        // 在vue里面不能直接使用Index 必须手动设置
+        
+        // 列表渲染 通过索引的方式给它渲染一个新的值 它是不会渲染到页面当中的 如果你想渲染到页面当中的话 需要使用到数组的定义方法或者使用set
+        
+        // 事件修饰符
+
+        // 子组件向父组件传值 在小程序通过自定义事件的方式向父组件传值 在vue里面同样也是这样
+    </script>
+    
+</body>
+</html>
