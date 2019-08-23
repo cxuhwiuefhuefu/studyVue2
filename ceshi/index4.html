@@ -25,10 +25,28 @@
                 <component :is="type"></component>
         </keep-alive> -->
 
-        <cmp-one>
+        <!-- 具名插槽 -->
+        <!-- <cmp-one>
             <span slot="after">slot</span>
         </cmp-one>
         <cmp-two :list="list"></cmp-two>
+        <cmp-two :list="list"></cmp-two> -->
+
+
+        <!-- 作用域插槽 -->
+        <cmp-one>
+            <span slot="after">slot</span>
+        </cmp-one>
+        <cmp-two :list="list">
+            <template slot-scope="list">
+                <li>{{list.item}} - {{list.index}}</li>
+            </template><!-- 名字是随意的 -->
+        </cmp-two>
+        <cmp-two :list="list">
+            <template slot-scope="list">
+                <li>{{list.index}} - {{list.item}}</li>
+            </template>
+        </cmp-two>
     </div>
 
     <script>
@@ -49,7 +67,12 @@
             template: `<div>
                             组件2：<input type="value">
                             <ul>
-                                <li v-for="item">
+                                <slot v-for="(item, index) in list" 
+                                    :key="item"
+                                    :item="item"
+                                    :index="index">
+                                    {{item}} - {{index}}
+                                </slot>
                             </ul>
                        </div>`
         }
@@ -81,6 +104,10 @@
         // keep-alive 配合 component使用
 
         // 可以写上有名字的插槽 具名插槽
+
+        // 组件2接收了从父级传过来的一组数据 这个数据是一个列表 但是这个数据该怎么样去显示是不由子组件去决定的 是由父组件去决定的 就是我使用的时候才能决定你这个列表是怎样显示的 
+
+        // 作用域插槽 通过父组件来控制子组价里面的东西
     
     
     </script>
