@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        {{msg}}
+    </div>
+    <script>
+        
+        // const vm = new Vue({
+        //     // el: '#app', // 写el是为把这个vue挂载到dom元素上 它才能去使用我们dom当中的数据 如果不写el的话就不显示出来 它直接把它当作文本这样显示出来了
+        //     data: {
+        //         msg: 'hello word',
+        //         red: false,
+        //         green: true
+        //     },
+        //     template: '<div>我是一个模板{{msg}}</div>',
+        //     // render(h) { // 这个参数是一个函数 在h这个函数里面可以得到一个虚拟的节点 这个h函数接收一个参数 必填的  
+        //     //             //     render函数的优先级是高于templete的 templete的优先级是高于el的
+        //     //     // console.log( h('div', {}) );
+        //     //     return h('p', {
+        //     //         style: {
+        //     //             color: 'red',
+        //     //             fontSize: '12px'
+        //     //         },
+        //     //         // class: 'red'
+        //     //         // class: ['red', 'green']
+        //     //         class: { // 动态绑定class
+        //     //             // red: true,
+        //     //             // green: false
+        //     //             red: this.red,
+        //     //             green: this.green
+        //     //         },
+        //     //         domProps: { // 写在dom元素的里面的东西 domProps优先级是高于下面的"我是一个p标签"
+        //     //             innerHTML: 'www'
+        //     //         }
+        //     //     }, '我是一个p标签');
+        //     // },
+        //     render(h) { // 这个参数是一个函数 在h这个函数里面可以得到一个虚拟的节点 这个h函数接收一个参数 必填的  
+        //                 //     render函数的优先级是高于templete的 templete的优先级是高于el的
+        //         // console.log( h('div', {}) );
+        //         return h('p', {
+        //             style: {
+        //                 color: 'red',
+        //                 fontSize: '12px'
+        //             },
+        //             // class: 'red'
+        //             // class: ['red', 'green']
+        //             class: { // 动态绑定class
+        //                 // red: true,
+        //                 // green: false
+        //                 red: this.red,
+        //                 green: this.green
+        //             },
+        //         }, [
+        //             h('h1'),
+        //             h('h2'),
+        //             h('h3')
+        //         ]);
+        //     },
+        // })
+
+        // vm.$mount('#app'); // 把vue实例挂载到dom元素上了 在dom元素上可以使用vue的语法 可以使用vue的数据了
+
+        
+        
+
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'hello'
+            },
+            methods: {
+                a() {
+                   console.log('aaa'); 
+                }
+            },
+            beforeCreate() {
+                console.log('------beforeCreate-------'); // 以下没有被打印出来是因为data还没有被初始化出来 相当于data和methods都没有
+                console.log(this.msg);
+                this.a();
+                alert('beforeCreate'); //alter可以阻住页面的加载
+            },
+        })
+
+        // 1. el  mout --> 都是挂载在dom元素
+        // 2. templete是一个字符串 --》 vue可以通过一个操作把字符串解析成抽象语法树(AST) AST相当于一个对象 然后它会把这个抽象语法树传入到一个render函数
+        //       通过这个render函数得到一个虚拟节点叫做VNode -> 然后通过这个VNode来拿到一个真实的数据 所以它经过一系列的操作
+        // 3. 在用vue的时候它会经过一系列的初始化 初始化完之后它会检查你有没有el元素 如果说有的话它会先去检查有没有templete模板 如果说templete模板的话
+        //         它会把字符串解析成抽象语法树 最后渲染成一个真实的dom  (templete:String --> AST({}) --> render --> VNode --> 真实的dom)
+        //         假如不存在el元素 它会去看看你有没有调用这个$mount方法 如果说你调用这个方法的话 它可以继续往下走 如果说既没有调用el这个属性
+        //         也没有调用$mount这个方法 实例就是凉凉了 就没有办法去用了 就是结束了 然后有$mount的话 它依旧会去看看也没有templete 
+        //         如果说templet的话它会进行下面一系列的操作(templete:String --> AST({}) --> render --> VNode --> 真实的dom)
+        //         如果说没有的话它会去el元素或者$mount挂载找到这个挂载元素 通过他们两个去获取挂载的元素 然后它拿到挂载元素的app.outerHTML
+        //         outerHTML是一个字符串 把outerHTML作为一个模板进行一系列的处理 就是你无论你存在或者不存在templete最后都存在templete
+        //         只不过是隐式的过程 如果说有templete就不会去看你这个挂载元素了 一开始的dom元素和最后通过一系列得到的dom元素长的一样 但他们两个不是一个
+        // 4. vue实例生命周期
+
+
+
+
+    </script>
+    
+</body>
+</html>
