@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+    <div id="app">
+        <course-list></course-list>
+        <course></course>
+    </div>
+    
+    <script>
+        // 组件基础
+        
+
+        
+        
+        // 全局组件
+        Vue.component('courseList', {
+            template: `<div>haha i am a cmp</div>`
+        })
+
+
+
+
+        // 局部组件
+        const courseList = {
+            template: `<div>haha i am a cmp!!!</div>`
+        }
+        const vm = new Vue({
+            el: '#app',
+            components: {
+                // course: {
+                //     template: `<div>haha i am a cmp!!!</div>`
+                // }
+                
+                courseList
+            },
+            data: {
+
+            }
+        })
+    
+        
+        // 1. 全局组件 局部组件 就近原则
+       
+    
+    
+    
+    </script>
+    
+</body>
+</html>

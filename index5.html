@@ -11,8 +11,13 @@
 
     <div id="app">
         {{msg}}
+        <button @click="change">btn</button>
     </div>
     <script>
+
+        // el templete render 生命周期
+
+
         
         // const vm = new Vue({
         //     // el: '#app', // 写el是为把这个vue挂载到dom元素上 它才能去使用我们dom当中的数据 如果不写el的话就不显示出来 它直接把它当作文本这样显示出来了
@@ -81,13 +86,42 @@
             methods: {
                 a() {
                    console.log('aaa'); 
+                },
+                change() {
+                    this.msg = 'iiii';
                 }
             },
             beforeCreate() {
                 console.log('------beforeCreate-------'); // 以下没有被打印出来是因为data还没有被初始化出来 相当于data和methods都没有
                 console.log(this.msg);
-                this.a();
+                // this.a();
+                console.log(this.a);
                 alert('beforeCreate'); //alter可以阻住页面的加载
+            },
+            created() {
+                console.log('------create-------');
+                console.log(this.msg);
+                // console.log(this.a);
+                this.a();
+                alert('create');
+            },
+            beforeMount() {
+                alert('beforeMount');
+            },
+            mounted() {
+                alert('mouted');
+            },
+            beforeUpdate() {
+                alert('beforeUpdate');
+            },
+            updated() {
+                alert('updated');
+            },
+            beforeDestroy() {
+                alert('bd');
+            },
+            destroyed() {
+                alert('des');
             },
         })
 
@@ -102,7 +136,12 @@
         //         如果说没有的话它会去el元素或者$mount挂载找到这个挂载元素 通过他们两个去获取挂载的元素 然后它拿到挂载元素的app.outerHTML
         //         outerHTML是一个字符串 把outerHTML作为一个模板进行一系列的处理 就是你无论你存在或者不存在templete最后都存在templete
         //         只不过是隐式的过程 如果说有templete就不会去看你这个挂载元素了 一开始的dom元素和最后通过一系列得到的dom元素长的一样 但他们两个不是一个
-        // 4. vue实例生命周期
+        // 4. vue实例生命周期 --> 初始化处理事件的方法还有初始化这样的生命周期函数 这里是进行事件和生命周期函数的初始化 --》
+        //    初始化完成之后回去执行beforeCreate函数 这个时候还是一个空壳子 data什么都没有 methods也没有 --》 还会初始化 
+        //    在这个初始化它会去把我们的数据和方法 这些配置对象什么的或者是computed都初始化出来 --》 然后初始化之后就会执行这个created函数 
+        //    也就是说我们这个vue实例正式的创建完了 它对象里面的东西都已经具备了 那说明我们在created函数里面就可以打印的出来 这个时候我们vue里面的属性都ok了
+        //    执行完destroyed 我们对vue的挂载就失效了 我们再去点击btn就失效了 因为Vue实例不再接管这一片了 
+        //
 
 
 

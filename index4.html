@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <button @click="changeCmp">切换</button>
+
+
+        <!-- v-if -->
+        <!-- <cmp-one v-if="showOne"></cmp-one>
+        <cmp-two v-else></cmp-two> -->
+
+        <!-- 动态组件 -->
+        <!-- <component :is="type"></component> -->
+
+        <!-- 保持状态 -->
+        <!-- <keep-alive>
+                <component :is="type"></component>
+        </keep-alive> -->
+
+        <!-- 具名插槽 -->
+        <!-- <cmp-one>
+            <span slot="after">slot</span>
+        </cmp-one>
+        <cmp-two :list="list"></cmp-two>
+        <cmp-two :list="list"></cmp-two> -->
+
+
+        <!-- 作用域插槽 -->
+        <cmp-one>
+            <span slot="after">slot</span>
+        </cmp-one>
+        <cmp-two :list="list">
+            <template slot-scope="list">
+                <li>{{list.item}} - {{list.index}}</li>
+            </template><!-- 名字是随意的 -->
+        </cmp-two>
+        <cmp-two :list="list">
+            <template slot-scope="list">
+                <li>{{list.index}} - {{list.item}}</li>
+            </template>
+        </cmp-two>
+    </div>
+
+    <script>
+        
+        // 动态组件丶插槽
+    
+
+        
+        const cmpOne = {
+            template: `<div>
+                            <slot name="before"></slot>
+                            组件1：<input type="value">
+                            <slot name="after"></slot>
+                       </div>`
+        }
+        const cmpTwo = {
+            props: ['list'],
+            template: `<div>
+                            组件2：<input type="value">
+                            <ul>
+                                <slot v-for="(item, index) in list" 
+                                    :key="item"
+                                    :item="item"
+                                    :index="index">
+                                    {{item}} - {{index}}
+                                </slot>
+                            </ul>
+                       </div>`
+        }
+
+        const vm = new Vue({
+            el: "#app",
+            components: {
+                cmpOne,
+                cmpTwo
+            },
+            data: {
+                showOne: true,
+                type: 'cmp-one',
+                list: [1, 2, 3, 4, 5]
+            },
+            methods: {
+                changeCmp() {
+                    // this.showOne = !this.showOne;
+
+                    this.type = this.type == 'cmp-one' ? 'cmp-two' : 'cmp-one';
+                }
+            },
+        })
+        
+
+        // 切换组件状态还在 对性能也是友好的 因为我们现在是不断重复的渲染页面 把动态组件放在keep-alive里面 代表了这里面的东西会放在缓存里面
+        //     不会被销毁了 它就会每次去切换来切换去的时候 它都是同一个东西 它的组件始终是原来的组件 而不是把原来的销毁了重新放进去跟原来一样的组件
+        //     它会保存原来的状态    
+        // keep-alive 配合 component使用
+
+        // 可以写上有名字的插槽 具名插槽
+
+        // 组件2接收了从父级传过来的一组数据 这个数据是一个列表 但是这个数据该怎么样去显示是不由子组件去决定的 是由父组件去决定的 就是我使用的时候才能决定你这个列表是怎样显示的 
+
+        // 作用域插槽 通过父组件来控制子组价里面的东西
+    
+    
+    </script>
+    
+</body>
+</html>
