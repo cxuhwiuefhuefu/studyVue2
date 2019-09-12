@@ -1,18 +1,37 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <HelloWorld/>
+    <!-- 路由匹配到的组件将在这里显示 -->
+    <!-- <router-view></router-view> -->
+
+
+    <!-- <a href="/">/</a>
+    <a href="/about">About</a>
+    <a href="/home">Home</a>
+    <router-view></router-view> -->
+
+
+    <!-- <router-link to="/"></router-link>
+    <router-link to="/about">About</router-link>
+    <router-link to="/home">Home</router-link>
+    <router-view></router-view> -->
+
+
+    <router-link :to="homeLink">/</router-link>
+    <router-link :to="{name: '11'}">Home</router-link>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-// import HelloWorld from ' ./components/HelloWorld'
 
 export default {
   name: 'App',
-  // components: {
-  //   HelloWorld
-  // }
+  data() {
+    return {
+      homeLink: "/"
+    }
+  }
 }
 </script>
 
