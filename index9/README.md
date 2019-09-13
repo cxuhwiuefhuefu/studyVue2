@@ -1,0 +1,9 @@
+- 嵌套路由
+- @
+- 如果你一个页面下面有另一个路由 当你去点击子路由的时候 你想让这个父路由也有样式的存在 就让它这个路径跟着你这个父路径下来的 
+- vertical-align和text-align的区别  line-height
+- scoped
+- 动态路由
+- 重定向
+- replace和push的区别 根据项目来使用
+- router-view的复用 使用多个router-view的时候可以配置一下我们的路由信息
