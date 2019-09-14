@@ -1,11 +1,28 @@
 <template>
     <div>
         333
+        <button @click="handleClick">{{ loginFlag ? '退出' : '登陆' }}</button>
     </div>
 </template>
 <script>
 export default {
-    
+    data() {
+        return {
+            loginFlag: false
+        }
+    },
+    created() {
+        console.log(this.$route.matched[0].meta.login);
+
+        this.loginFlag = this.$route.matched[0].meta.login;
+        // this.$route.matched[0].meta.login = !loginFlag;
+    },
+    methods: {
+        handleClick() {
+            this.loginFlag = !this.loginFlag;
+            this.$route.matched[0].meta.login = this.loginFlag;
+        }
+    }
 }
 </script>
 <style lang="">

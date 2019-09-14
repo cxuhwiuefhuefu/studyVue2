@@ -13,6 +13,32 @@
 </template>
 <script>
 export default {
+    // 组件内守卫
+    beforeRouteEnter(to, from, next) {
+        // console.log(this); // 为什么是undefined？ 因为还没进入到这个组件呢 它还没初始化呢
+        console.log(to);
+
+        const isLogin = to.matched[0].meta.login;
+        if(isLogin) {
+            next();
+            return;
+        }
+
+        const answer = confirm('你还没有登陆，要登陆后才能浏览信息，要登陆嘛？');
+        if(answer) {
+            next({name: 'personal'});
+        }else {
+            next(false);
+        }
+    },
+    beforeRouteLeave (to, from, next) {
+        const answer = confirm('确定要离开吗');
+        if(answer) {
+            next();
+        }else {
+            next(false);
+        }
+    },
     data() {
         return {
             questionList: [

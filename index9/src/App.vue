@@ -15,8 +15,9 @@
         </ul>
       </div>
     </div>
+  
     <router-view class="router-view"></router-view>
-    <router-view class="router-view" name="academic"></router-view> <!-- name就是我们配置component的名字 -->
+    <!-- <router-view class="router-view" name="academic"></router-view> name就是我们配置component的名字 -->
   
     <div class="footer"></div>
   
