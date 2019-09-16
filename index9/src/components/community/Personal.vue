@@ -12,7 +12,7 @@ export default {
         }
     },
     created() {
-        console.log(this.$route.matched[0].meta.login);
+        // console.log(this.$route.matched[0].meta.login);
 
         this.loginFlag = this.$route.matched[0].meta.login;
         // this.$route.matched[0].meta.login = !loginFlag;

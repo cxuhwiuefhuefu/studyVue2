@@ -1,11 +1,12 @@
+// 都是从node_modules中引入Vue和Router模块
 import Vue from 'vue'
 import Router from 'vue-router'
 
-// import About from '@/components/About'
-// import Community from '@/components/Community'
-// import Home from '@/components/Home'
-// import Learn from '@/components/Learn'
-// import Student from '@/components/Student'
+// import About from '@/views/About'
+// import Community from '@/views/Community'
+// import Home from '@/views/Home'
+// import Learn from '@/views/Learn'
+// import Student from '@/views/Student'
 
 // import Academic from '@/components/community/Academic'
 // import Download from '@/components/community/Download'
@@ -30,12 +31,14 @@ const Question = () => import('@/components/Question');
 const Err = () => import('@/components/Err');
 
 
-
+// 使用路由
 Vue.use(Router);
 
+
+// 实例化一个路由
 const router = new Router({
-  mode: 'history',
-  base: process.env.BASE-URL, // ????
+  mode: 'history', // 去掉路由地址的# 
+  base: process.env.BASE-URL, // 
   linkActiveClass: 'active', // 重置类名
   linkExactActiveClass: 'exact', 
   routes: [
@@ -49,12 +52,15 @@ const router = new Router({
       name: 'community',
       component: Community,
       redirect: '/community/academic', // 每当你进入到这个路径的时候都会重定向到另外一个路径去
-      meta: { // 路由源信息 你可以自己给他定义一个属性 定义一个值 这个信息从哪里取 这个meta可以在哪里取 可以在自己对应的路径下取 也可以在组件对应的路径下来取
+      meta: { // 路由元信息 你可以自己给他定义一个属性 定义一个值 这个信息从哪里取
+              //     这个meta可以在哪里取 可以在自己对应的路径下取 也可以在组件对应的路径下来取
         login: false
       },
       children: [
         {
-          // path: '/community/academic', // 路径太麻烦了 把前面重复的删除掉 只要不涉及到斜杠就好了 如果涉及到斜杠它就会认为你涉及到根路径下的/academic 如果你不写斜杠的话 它就会知道它会知道你这个是comminity的子路由 
+          // path: '/community/academic', // 路径太麻烦了 把前面重复的删除掉 只要不涉及到斜杠就好了 
+                                          //     如果涉及到斜杠它就会认为你涉及到根路径下的/academic 如果你不写斜杠的话 
+                                          //     它就会知道它会知道你这个是comminity的子路由 
           path: 'academic',
           name: 'academic',
           component: Academic,
@@ -83,8 +89,11 @@ const router = new Router({
     },
     {
       path: '/home',
+
       // path: '/',  
-      // alias: '/home',// 我们想/和/home显示的是同一个路径 需要用到路由别名  这个不适应我们这个项目 因为我们使用这个/的路径的话 就没有那个样式了 在我们这个项目最好还是还是使用重定向这个方法比较好
+      // alias: '/home',// 我们想/和/home显示的是同一个路径 需要用到路由别名  
+                        //     这个不适应我们这个项目 因为我们使用这个/的路径的话
+                        //     就没有那个样式了 在我们这个项目最好还是还是使用重定向这个方法比较好
       name: 'home',
       // component: Home
 
@@ -104,7 +113,8 @@ const router = new Router({
       component: Student
     },
     {
-      path: '/question/:id', // 只要加上:id 它就会让你是动态 它就会根据你这个值动态的去这个路径
+      path: '/question/:id', // 只要加上:id 它就会让你是动态 
+                             //     它就会根据你这个值动态的去这个路径
       name: 'question',
       component: Question
     },
@@ -157,5 +167,5 @@ const router = new Router({
 
 
 
-// 导出
+// 导出路由
 export default router;

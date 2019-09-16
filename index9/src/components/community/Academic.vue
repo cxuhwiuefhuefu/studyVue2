@@ -16,7 +16,7 @@ export default {
     // 组件内守卫
     beforeRouteEnter(to, from, next) {
         // console.log(this); // 为什么是undefined？ 因为还没进入到这个组件呢 它还没初始化呢
-        console.log(to);
+        // console.log(to);
 
         const isLogin = to.matched[0].meta.login;
         if(isLogin) {
@@ -26,6 +26,7 @@ export default {
 
         const answer = confirm('你还没有登陆，要登陆后才能浏览信息，要登陆嘛？');
         if(answer) {
+            // 还没登录需要到个人中心页面进行登录 
             next({name: 'personal'});
         }else {
             next(false);
@@ -39,6 +40,7 @@ export default {
             next(false);
         }
     },
+
     data() {
         return {
             questionList: [

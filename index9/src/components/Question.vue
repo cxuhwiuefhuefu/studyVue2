@@ -8,9 +8,10 @@
 <script>
 export default {
     created() {
+        // console.log(this.$route.params);
         const questionId = this.$route.params.id;
 
-        // 正常是发送一组请求的 现在模拟
+        // 获取到动态的id 正常是发送一组请求的 现在模拟
         const index = this.questionList.findIndex(item => item.questionId == questionId);
         if(index == -1) {
             // 找不到跳转到另一个页面去
@@ -20,6 +21,7 @@ export default {
             // replace [a, b, c, d] => [a, b, c, e] 替换
             // this.$router.replace('/err.html');
             this.$router.replace({name: 'err'});
+
             // push [a, b, c, d] => [a, b, c, d, e] ?? 为什么不能跳转??  压栈
             // this.$router.push({name: 'err'});
 
@@ -27,7 +29,7 @@ export default {
             this.question = this.questionList[index].title;
         }
        
-        console.log(index)
+        // console.log(index)
     },
     methods: {
         handleClick() {

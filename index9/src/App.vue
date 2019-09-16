@@ -30,7 +30,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 /*
  .router-link-exact-active
  .router-link-active
@@ -64,7 +65,6 @@ export default {
   height: 50px;
   vertical-align: middle; /* ?? */ 
 }
-
 .header .center ul{
   display: flex;
 }
@@ -73,17 +73,20 @@ export default {
   padding: 0 30px;
   cursor: pointer;
 }
-.footer{
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 150px;
-  background: #000;
-}
+
 .router-view{
   width: 1000px;
   margin: 0 auto;
   padding: 40px;
 }
+
+.footer{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  background: #000;
+}
+
 
 </style>
