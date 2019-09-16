@@ -32,14 +32,14 @@ export default {
             next(false);
         }
     },
-    beforeRouteLeave (to, from, next) {
-        const answer = confirm('确定要离开吗');
-        if(answer) {
-            next();
-        }else {
-            next(false);
-        }
-    },
+    // beforeRouteLeave (to, from, next) {
+    //     const answer = confirm('确定要离开吗');
+    //     if(answer) {
+    //         next();
+    //     }else {
+    //         next(false);
+    //     }
+    // },
 
     data() {
         return {

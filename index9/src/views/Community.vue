@@ -16,7 +16,14 @@
 </template>
 <script>
 export default {
-    
+     beforeRouteLeave (to, from, next) {
+        const answer = confirm('确定要离开吗');
+        if(answer) {
+            next();
+        }else {
+            next(false);
+        }
+    },
 }
 </script>
 <style scoped>
