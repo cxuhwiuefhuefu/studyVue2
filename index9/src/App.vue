@@ -76,13 +76,14 @@ export default {
 
 .router-view{
   width: 1000px;
+  min-height: 500px; /* 给他个500px像素撑开下面的footer */
   margin: 0 auto;
   padding: 40px;
 }
 
 .footer{
-  position: fixed;
-  bottom: 0;
+  /* position: fixed;
+  bottom: 0; */
   width: 100%;
   height: 70px;
   background: #000;

@@ -30,6 +30,7 @@ const Personal = () => import('@/components/community/Personal');
 const Question = () => import('@/components/Question');
 const Err = () => import('@/components/Err');
 
+const ChangeCourse = () => import('@/components/ChangeCourse');
 
 // 使用路由
 Vue.use(Router);
@@ -105,7 +106,14 @@ const router = new Router({
     {
       path: '/learn',
       name: 'learn',
-      component: Learn
+      component: Learn,
+      // children: [
+      //   {
+      //     path: 'changeCourse',
+      //     name: 'changeCourse',
+      //     component: ChangeCourse
+      //   }
+      // ]
     },
     {
       path: '/student',
@@ -122,6 +130,11 @@ const router = new Router({
       path: '/err.html',
       name: 'err',
       component: Err
+    },
+    {
+      path: '/learn/changeCourse',
+      name: 'changeCourse',
+      component: ChangeCourse
     },
     {
       path: '*', // 除了配置之外的一切路径
