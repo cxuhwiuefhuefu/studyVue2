@@ -2,8 +2,8 @@
     <div>
         添加学生：
         <input type="text" v-model="name">
-        <!-- <button @click="add">确认添加</button> -->
-        <button @click="changeStudent({name, number: 1})">确认添加</button>
+        <button @click="add">确认添加</button>
+        <!-- <button @click="changeStudent({name, number: 1})">确认添加</button> -->
         
 
         {{storeName}}
@@ -59,25 +59,25 @@ export default {
         }
     },
     methods: {
-        // add() {
-        //     // this.$emit('add', this.name);
+        add() {
+            // this.$emit('add', this.name);
 
-        //     // console.log(this.bus);
-        //     // this.bus.$emit('add', this.name);
+            console.log(this.bus);
+            this.bus.$emit('add', this.name);
 
-        //     // this.$store.state.name = '航哥帅';
-        //     // this.$store.state.studentList.push(this.name);
+            // this.$store.state.name = '航哥帅';
+            // this.$store.state.studentList.push(this.name);
 
-        //     // this.$store.commit('changeStudent', {name: this.name, number: 1});
+            // this.$store.commit('changeStudent', {name: this.name, number: 1});
 
-        //     this.$store.dispatch('changeStudent', {name: this.name, number: 1});
-        // }
+            // this.$store.dispatch('changeStudent', {name: this.name, number: 1});
+        },
 
 
 
         // ...mapActions(['changeStudent']) // 意味着添加学生这个组件里面有个函数叫做changeStudent
         // 模块化的写法
-        ...mapActions('student', ['changeStudent']) // 使用模块 其余的地方都没有做一些太大修改 更方便我们去操作一些数据 去处理一些逻辑 进行一些修改 
+        // ...mapActions('student', ['changeStudent']) // 使用模块 其余的地方都没有做一些太大修改 更方便我们去操作一些数据 去处理一些逻辑 进行一些修改 
     }
 }
 </script>

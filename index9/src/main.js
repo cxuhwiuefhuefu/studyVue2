@@ -11,8 +11,8 @@ import store from './store'
 
 Vue.config.productionTip = false
 
-
-Vue.prototype.bus = new Vue()
+// 使用一个空的Vue实例作为中央事件总线
+Vue.prototype.bus = new Vue();
 
 // 实例化一个vue实例
 new Vue({
@@ -20,5 +20,5 @@ new Vue({
   router,
   store,
   components: { App },
-  template: '<App/>' // 相对于把id为app的元素替换成</app> 如何</app>又被识别为App组件 也就是App.vue
+  template: '<App/>', // 相对于把id为app的元素替换成</app> 如何</app>又被识别为App组件 也就是App.vue\
 })

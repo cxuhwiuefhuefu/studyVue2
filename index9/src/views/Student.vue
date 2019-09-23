@@ -19,15 +19,15 @@ export default {
     },
     data() {
         return {
-            studentList: []
+            // studentList: []
         }  
     },
     methods: {
-        add(name) {
-            // console.log(name);  
-            this.studentList.push(name);
-            console.log(this.studentList);
-        }
+        // add(name) {
+        //     // console.log(name);  
+        //     this.studentList.push(name);
+        //     console.log(this.studentList);
+        // }
     }
 }
 </script>

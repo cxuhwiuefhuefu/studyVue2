@@ -14,16 +14,16 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 export default {
-    // props: ['student-list'], // ????
+    // props: ['student-list'], 
     data() {
         return {
-            // studentList: []
+            studentList: []
         }
     },
     computed: {
         // ...mapState(['studentList']),
         // 模块化的写法
-        ...mapState('student', ['studentList']),
+        // ...mapState('student', ['studentList']),
 
 
 
@@ -35,15 +35,21 @@ export default {
         //     student: 'newStudent' // 新命名: Getters里面的命名
         // })
         // 模块化的写法
-        ...mapGetters('student', {
-            student: 'newStudent'
-        })
+        // ...mapGetters('student', {
+        //     student: 'newStudent'
+        // })
     },
     created() {
         this.bus.$on('add', name => {
             this.studentList.push(name);
         })
-    }
+    },
+    // 注册的总线事件要在组件销毁时卸载，否则会多次挂载，造成触发一次但多个响应的情况
+    beforeDestroy() { 
+        this.bus.$off('add', name => {
+            this.studentList.push(name);  
+        })
+    },
 }
 </script>
 
