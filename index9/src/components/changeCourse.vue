@@ -15,6 +15,7 @@
             </button>
         </div>
 
+
         <template v-else>
             <ul class="course-area">
                 <li v-for="(item, index) in courseList"
@@ -53,6 +54,7 @@ export default {
         }
     },
     computed: {
+        // ...mapState(['courseList'])
         ...mapState('course', ['courseList'])
     },
     methods: {
@@ -98,6 +100,7 @@ export default {
         padding: 5px;
         margin-left: 10px;
     }
+
     .change-area {
         display: inline-block;
     }

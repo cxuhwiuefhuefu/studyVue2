@@ -124,14 +124,27 @@
 ----
 - Vue state
   - 有没有什么方式可以快速的拿到公共数据池里面的值
+    - this.$store.state
+    - ``` objc
+       computed: {
+            ..mapState({
+               storeName: state => state.name,
+               storeAge: state => state.age,
+               storeLook: state => state.look
+            }),
+            a() {
+               return: '111'
+            }
+         } 
+      ```
   - data里面的优先级是高于compoted里面的计算属性的
 
 
 
---- 
+----
 - vue getter
-1. 在add函数通过判断索引 
-2. 也可以在student这个组件里面来做 我拿到这个数据池里面的studentList这个数组 如何对他进行遍历得到又给新的数组然后for循环又给新的数组就可以了
+  - 1. 在add函数通过判断索引 
+  - 2. 也可以在student这个组件里面来做，我拿到这个数据池里面的studentList这个数组，如何对他进行遍历得到又给新的数组然后for循环又给新的数组就可以了。
 
 也就是我们刚才说的这两种方法只适用于这个两个组件相互传值的情况 而不是说复用这两种值
 
@@ -146,10 +159,13 @@ mutation函数去进行更改
 跳转第九次触发函数的时候
 用vue-tool工具进行调试
 https://vuex.vuejs.org/zh/
-Vue Componets这个组件通过Dispatch这个方法触发我这个Actions 如何Actions通过Commit触发Mutation里面的函数 如何Mutation里面的函数来更改我们我们数据里面的值 数据里面的值更改之后会渲染到我们组件上去 这是一个闭环的处理 一步一步的去触发某个东西来达到这样的效果
-Bakand API <--> Actions:就是你可以在里面去做一些异步的处理 我们获取API也是异步的 
+
+- Vue Components这个组件通过Dispatch这个方法触发我这个Actions 然后Actions通过Commit触发Mutations里面的函数 然后Mutations里面的函数来更改我们我们数据里面的值 数据里面的值更改之后会渲染到我们组件上去 这是一个闭环的处理 一步一步的去触发某个东西来达到这样的效果
+
+- Backend API <--> Actions: 就是你可以在里面去做一些异步的处理 我们获取API也是异步的 
 Devtools <--> Mutations: 意思就是你可以通过Devtools来看Mutations的状态
-处理异步需要用到Actions 不处理异步还要更改数据可以跳过这一步了 直接让它用这个vue Components通过这个Commit方法来执行Mutation函数 然后Mutation函数再去更改我们State当中的值 然后再渲染到我们的组件里面去
+
+- 处理异步需要用到Actions 不处理异步还要更改数据可以跳过这一步了 直接让它用这个vue Components通过这个Commit方法来执行Mutation函数 然后Mutations函数再去更改我们State当中的值 然后再渲染到我们的组件里面去
 
 
 
@@ -176,7 +192,10 @@ vuex module
 
 
 
+
+
 (文章) 
 - vue生命周期函数
 - 网络状态码
 - vertical-align和text-align的区别  line-height
+- min-height用法

@@ -9,6 +9,7 @@
                      class="change-course-btn">
                      修改课程
         </router-link>
+        <!-- 匹配到组件将在这里显示 -->
         <router-view></router-view>
     </div>
 </template>

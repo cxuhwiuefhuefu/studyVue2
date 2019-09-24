@@ -3,13 +3,13 @@
         <li v-for="item in courseList"
             :key="item.name"
             class="course">
-            <img :src="item.poster" alt="" class="poster">
-            <p class="title">{{item.name}}</p>
-            <div class="course-info">
-                <div class="price" v-if="item.price > 0">￥{{item.price}}</div>
-                <div class="price free" v-else>免费</div>
-                <div class="institution">航哥好帅</div>
-            </div>
+                <img :src="item.poster" alt="" class="poster">
+                <p class="title">{{item.name}}</p>
+                <div class="course-info">
+                    <div class="price" v-if="item.price > 0">￥{{item.price}}</div>
+                    <div class="price free" v-else>免费</div>
+                    <div class="institution">航哥好帅</div>
+                </div>
         </li>
     </ul>
 </template>

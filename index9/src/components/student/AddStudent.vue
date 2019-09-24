@@ -2,8 +2,8 @@
     <div>
         添加学生：
         <input type="text" v-model="name">
-        <button @click="add">确认添加</button>
-        <!-- <button @click="changeStudent({name, number: 1})">确认添加</button> -->
+        <!-- <button @click="add">确认添加</button> -->
+        <button @click="changeStudent({name, number: 1})">确认添加</button>
         
 
         {{storeName}}
@@ -17,14 +17,15 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'; // mapState有个返回值 是个对象 对象里面有个key和value 这里面的key和value都是是函数 computed的返回值和他长得一样
-                                 //     意味着可以把computed直接赋值给我们的mapState的返回值
+import { mapState, mapActions } from 'vuex'; // mapState有个返回值 是个对象 对象里面有个key和value 
+                                             //     这里面的key和value都是是函数 computed的返回值和他长得一样
+                                             //     意味着可以把computed直接赋值给我们的mapState的返回值
 
 export default {
     data() {
         return {
             name: "",
-            // storeName: this.$store.state.name
+            // storeName: this.$store.state.name,
 
             index: 0,
         } 
@@ -33,7 +34,7 @@ export default {
     //     storeName() {
     //         return this.$store.state.name
     //     },
-    //     StoreAge() {
+    //     storeAge() {
     //         return this.$store.state.age
     //     },
     //     storeLook() {
@@ -47,7 +48,8 @@ export default {
     //     storeAge: state => state.age,
     //     storeLook: state => state.look
     // }),
-    computed: { // 一些值是通过mapState这个方式拿到的 有一些是自己定义的 用拓展运算符 这个是最完美的方式
+    computed: { // 一些值是通过mapState这个方式拿到的 有一些是自己定义的 
+                //     用拓展运算符 这个是最完美的方式
         ...mapState({ // 取根数据就不需要修改了在前面不需要加上模块的名字了
             storeName: state => state.name,
             storeAge: state => state.age,
@@ -59,25 +61,30 @@ export default {
         }
     },
     methods: {
-        add() {
-            // this.$emit('add', this.name);
+        // add() {
+        //     // this.$emit('add', this.name);
 
-            console.log(this.bus);
-            this.bus.$emit('add', this.name);
+        //     // console.log(this.bus);
+        //     // this.bus.$emit('add', this.name);
 
-            // this.$store.state.name = '航哥帅';
-            // this.$store.state.studentList.push(this.name);
+        //     // console.log(this.$store.state);
+        //     // this.$store.state.name = '航哥帅';
+        //     // this.$store.state.studentList.push(this.name);
 
-            // this.$store.commit('changeStudent', {name: this.name, number: 1});
+        //     // 同步操作
+        //     // this.$store.commit('changeStudent', {name: this.name, number: 1});
 
-            // this.$store.dispatch('changeStudent', {name: this.name, number: 1});
-        },
+        //     // 异步操作
+        //     this.$store.dispatch('changeStudent', {name: this.name, number: 1});
+        // },
 
 
 
+
+        // 异步
         // ...mapActions(['changeStudent']) // 意味着添加学生这个组件里面有个函数叫做changeStudent
         // 模块化的写法
-        // ...mapActions('student', ['changeStudent']) // 使用模块 其余的地方都没有做一些太大修改 更方便我们去操作一些数据 去处理一些逻辑 进行一些修改 
+        ...mapActions('student', ['changeStudent']) // 使用模块 其余的地方都没有做一些太大修改 更方便我们去操作一些数据 去处理一些逻辑 进行一些修改 
     }
 }
 </script>
